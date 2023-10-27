@@ -1,15 +1,30 @@
 import { createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react"; // Import useState for handling form input
-
-const supabaseUrl = "https://vmwzmajqhmtuvfjkczdb.supabase.co";
+const supabaseUrl = "https://swrxqpbfstnvhkymvmcc.supabase.co";
 const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZtd3ptYWpxaG10dXZmamtjemRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTgzNjk0NTIsImV4cCI6MjAxMzk0NTQ1Mn0.LgUdiFzERf7u2kyFcDePy_FktXxbu-VVf_vALU-itxY"; // Replace with your Supabase API Key
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN3cnhxcGJmc3RudmhreW12bWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTgyNzEzMzIsImV4cCI6MjAxMzg0NzMzMn0.5b2Qxjwbovc0C405AefJZ2Duz9_WVG7WkF8-6djz9rs"; // Replace with your Supabase API Key
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export const SignInForm = () => {
   const [email, setEmail] = useState(""); // State for email input
   const [password, setPassword] = useState(""); // State for password input
   const [user, setUser] = useState<any>();
+
+  useEffect(() => {
+    // Check if userData is in localStorage
+    const userDataString = sessionStorage.getItem("userData");
+    if (userDataString) {
+      // If userData is found in localStorage, parse it and set it in your component state
+      const userData = JSON.parse(userDataString);
+      setUser(userData);
+      console.log(userData);
+      if (userData.userRole === "customer") {
+        window.location.href = "/Booking";
+      } else {
+        window.location.href = "/Dashboard";
+      }
+    }
+  }, []);
 
   const onSubmit = async (event: any) => {
     event.preventDefault(); // Prevent the default form submission
@@ -23,27 +38,23 @@ export const SignInForm = () => {
       } else {
         console.log("Signed in as:", data);
         setUser(data);
+        let user: any = await supabase.from("user").select("*").eq("email", email);
 
-        // let user: any = await supabase
-        //   .from("staff")
-        //   .select("*")
-        //   .eq("email", email);
-
-        sessionStorage.setItem("userData", JSON.stringify({ data }));
-
-        // if (user.data?.length > 0) {
-        //   sessionStorage.setItem(
-        //     "userData",
-        //     JSON.stringify({ userRole: "staff", ...data })
-        //   );
-        //   console.log(user.data)
-        //   return;
-        // } else {
-        //   sessionStorage.setItem(
-        //     "userData",
-        //     JSON.stringify({ userRole: "customer", ...data })
-        //   );
-        // }
+        if (user.data?.length > 0) {
+          sessionStorage.setItem(
+            "userData",
+            JSON.stringify({ userRole: "staff", ...data })
+          );
+          console.log(user.data)
+          window.location.href = "/Dashboard";
+          return;
+        } else {
+          sessionStorage.setItem(
+            "userData",
+            JSON.stringify({ userRole: "customer", ...data })
+          );
+          window.location.href = "/Booking";
+        }
       }
     } catch (error) {
       console.error("Sign in error:", error);
@@ -53,7 +64,7 @@ export const SignInForm = () => {
   return (
     <>
       {user ? (
-        <>Already Signed In</>
+        <></>
       ) : (
         <div className="bg-[#F9FAFB] h-full w-full flex items-center">
           <div className="h-max mx-auto flex flex-col items-center">
@@ -87,7 +98,7 @@ export const SignInForm = () => {
               </div>
               <div>
                 <input
-                  className="bg-orange w-full my-10 py-2 rounded-md text-white font-bold cursor-pointer"
+                  className="bg-green-700 w-full my-10 py-2 rounded-md text-white font-bold cursor-pointer"
                   type="submit"
                   value="Login"
                 />

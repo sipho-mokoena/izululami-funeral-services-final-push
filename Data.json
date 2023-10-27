@@ -1,0 +1,111 @@
+{
+  "accountingEntries": [
+    {
+      "id": 1,
+      "payers_name": "Bruce Jones",
+      "amount": "834.01",
+      "date": "8/1/2023",
+      "email": "Adeline20@gmail.com",
+      "type": "Debit"
+    },
+    {
+      "id": 2,
+      "payers_name": "Dr. Rufus Cole",
+      "amount": "755.61",
+      "date": "12/30/2022",
+      "email": "Hallie61@gmail.com",
+      "type": "Debit"
+    },
+    {
+      "id": 3,
+      "payers_name": "Elias Welch",
+      "amount": "981.36",
+      "date": "3/28/2023",
+      "email": "Alessandro.Kuhlman1@hotmail.com",
+      "type": "Credit"
+    },
+    {
+      "id": 4,
+      "payers_name": "Robin White",
+      "amount": "83.92",
+      "date": "5/28/2023",
+      "email": "Tyshawn_Senger-Macejkovic0@hotmail.com",
+      "type": "Debit"
+    },
+    {
+      "id": 5,
+      "payers_name": "Toni Cremin",
+      "amount": "376.71",
+      "date": "2/10/2023",
+      "email": "Alanna_Anderson9@yahoo.com",
+      "type": "Credit"
+    },
+    {
+      "id": 6,
+      "payers_name": "Sarah Ledner",
+      "amount": "351.42",
+      "date": "12/6/2022",
+      "email": "Sofia_Batz@hotmail.com",
+      "type": "Debit"
+    },
+    {
+      "id": 7,
+      "payers_name": "Ron Effertz IV",
+      "amount": "248.79",
+      "date": "7/5/2023",
+      "email": "Griffin.Larkin13@hotmail.com",
+      "type": "Debit"
+    },
+    {
+      "id": 8,
+      "payers_name": "Jorge Pollich",
+      "amount": "953.34",
+      "date": "10/12/2023",
+      "email": "Cecilia.Kozey@hotmail.com",
+      "type": "Credit"
+    },
+    {
+      "id": 9,
+      "payers_name": "Ora Gerhold",
+      "amount": "61.53",
+      "date": "8/5/2023",
+      "email": "Murray42@hotmail.com",
+      "type": "Credit"
+    },
+    {
+      "id": 10,
+      "payers_name": "Cecelia Kemmer IV",
+      "amount": "714.05",
+      "date": "9/5/2023",
+      "email": "Adolfo_Huel7@yahoo.com",
+      "type": "Credit"
+    }
+  ],
+  "rewards": [
+    {
+      "title": "deduco avarus vitiosus",
+      "description": "Eos spoliatio demitto coepi adflicto viscus comburo antiquus.",
+      "pointsRequired": 17
+    },
+    {
+      "title": "avarus urbs complectus",
+      "description": "Distinctio voco cauda umerus aliquid assumenda tres.",
+      "pointsRequired": 58
+    },
+    {
+      "title": "tactus congregatio antea",
+      "description": "Turba deduco vilitas eveniet error avarus adsum.",
+      "pointsRequired": 44
+    },
+    {
+      "title": "damno usque adficio",
+      "description": "Corrupti terror sopor.",
+      "pointsRequired": 24
+    },
+    {
+      "title": "natus vivo demoror",
+      "description": "Nemo deputo patior argumentum casus abundans complectus vesica.",
+      "pointsRequired": 22
+    }
+  ]
+}

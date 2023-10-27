@@ -1,3 +1,5 @@
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
 import { createClient } from "@supabase/supabase-js";
 import { useState, useEffect } from "react"; // Import useState for handling form input
 const supabaseUrl = "https://swrxqpbfstnvhkymvmcc.supabase.co";
@@ -29,8 +31,13 @@ export const BookAppointment = () => {
     // Check if userData is in localStorage
     const userDataString = sessionStorage.getItem("userData");
     if (userDataString) {
-      setUserData(JSON.parse(userDataString));
-      setServicesSpa();
+      const bookingDataString = localStorage.getItem("bookingData");
+      if (bookingDataString) {
+        window.location.href = "/Payment";
+      } else {
+        setUserData(JSON.parse(userDataString));
+        setServicesSpa();
+      }
     } else {
       window.location.href = "/SignIn";
     }
@@ -42,20 +49,20 @@ export const BookAppointment = () => {
     console.log("Submitted Date and Time:", appointmentDateTime);
     console.log("Selected Services:", selectedServices);
 
-    let userQry = await supabase
-      .from("user")
+    let customerQry = await supabase
+      .from("customer")
       .select("*")
       .eq("email", userData?.user?.identities[0]?.identity_data?.email);
 
-    if (userQry.error) {
-      console.log(userQry.error);
+    if (customerQry.error) {
+      console.log(customerQry.error);
       return;
     }
 
     const users = await supabase.from("user").select("*");
 
     if (users.error) {
-      console.log(userQry.error);
+      console.log(customerQry.error);
       return;
     }
 
@@ -65,22 +72,25 @@ export const BookAppointment = () => {
         {
           appointmentdatetime: appointmentDateTime,
           user: getRandomInt(1, users?.data.length),
-          customer: userQry.data[0]?.id,
+          customer: customerQry.data[0]?.id,
         },
       ])
       .select();
-
     if (booking.error) {
       console.log(booking.error);
       return;
     }
 
-    let bookingSpaservices: any[] = []
+    let bookingSpaservices: any[] = [];
 
-    selectedServices.forEach((selectedService) => console.log(bookingSpaservices.push({
-        booking: booking.data[0]?.id,
-        spaservice: parseInt(selectedService)
-      })))
+    selectedServices.forEach((selectedService) =>
+      console.log(
+        bookingSpaservices.push({
+          booking: booking.data[0]?.id,
+          spaservice: parseInt(selectedService),
+        })
+      )
+    );
 
     const bookingSpaservice = await supabase
       .from("booking_spaservice")
@@ -93,7 +103,11 @@ export const BookAppointment = () => {
     }
 
     if (booking.data && bookingSpaservice.data) {
-        window.location.href = '/Payment';
+      localStorage.setItem(
+        "bookingData",
+        JSON.stringify({ booking: booking.data })
+      );
+      window.location.href = "/Payment";
     }
   };
   return (
@@ -159,6 +173,10 @@ export const BookAppointment = () => {
                   "loading..."
                 )}
               </div>
+              
+      <PayPalScriptProvider options={{ "clientId": "AUBZCmToZtP1fYa2i_N5kmlmRrwCTsmwDWl0_CSKPQSVOVvWlJKhIM1VS0_tv_Pzpwrk_MS1OIHRk86g" }}>
+        <PayPalButtons />
+      </PayPalScriptProvider>
               <div>
                 <input
                   className="bg-green-700 w-full py-2 rounded-md text-white font-bold cursor-pointer"
